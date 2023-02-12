@@ -27,14 +27,9 @@ class ChessEloService {
         const cursor = await this.ChessElo.find(filter);
         return await cursor.toArray();
     }
-    async findChessEloByName(name) {
-        return await this.ChessElo.find({
-            name: { $regex: new RegExp(name), $options: "i" },
-        });
-    }
     async findChessEloById(id) {
         return await this.ChessElo.findOne({
-            _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
+            idPlayer: id
         });
     }
     async updateChessElo(id, payload) {

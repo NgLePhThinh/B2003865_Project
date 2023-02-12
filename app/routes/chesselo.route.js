@@ -8,7 +8,7 @@ router.route("/")
     .get(chesselo.findAllChessElo)
     .post(chesselo.createChessElo);
 
-router.route(":/id")
+router.route("/:id")
     .get(chesselo.findOneChessElo)
     .put(chesselo.updateChessElo);
 

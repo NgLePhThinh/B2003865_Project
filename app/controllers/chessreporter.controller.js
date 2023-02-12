@@ -1,15 +1,14 @@
-const ChessEloService = require ("../services/chesselo.service");
+const ChessReporterService = require ("../services/chessreporter.service");
 const MongoDB = require("../utils/mongodb.util");
 const ApiError = require("../api-error");
-
-exports.createChessElo = async (req,res, next) => {
-    if(!req.body?.idPlayer){
+exports.createChessReporter = async (req,res, next) => {
+    if(!req.body?.Event){
         return next(new ApiError(400,`An error occurred`));
     }
     try{
-        const chessEloService = new ChessEloService(MongoDB.client);
+        const chessReporterService = new ChessReporterService(MongoDB.client);
         console.log(req.body);
-        const document = await chessEloService.createChessElo(req.body);
+        const document = await chessReporterService.createChessReporter(req.body);
         return res.send(document);
     }catch(error){
         return next(
@@ -17,28 +16,27 @@ exports.createChessElo = async (req,res, next) => {
         );
     }
 };
-exports.findAllChessElo = async (req,res, next) => {
+exports.findAllChessReporter = async (req,res, next) => {
     let documents = [];
     try{
-        const chessEloService = new ChessEloService(MongoDB.client);
+        const chessReporterService = new ChessReporterService(MongoDB.client);
         const {name} = req.query;
         if(name){
-            documents = await chessEloService.findChessEloByName(name);
+            documents = await chessReporterService.findChessReporterByName(name);
         }else{
-            documents = await chessEloService.findChessElo({});
+            documents = await chessReporterService.findChessReporter({});
         }
     }catch(error){
         return next(
-            new ApiError(500,"An error occurred while find All ChessElo")
+            new ApiError(500,"An error occurred while find All ChessReporter")
         );
     }
-    return res.send(documents);
+    res.json(documents);
 };
-exports.findOneChessElo = async (req,res, next) => {
+exports.findOneChessReporter = async (req,res, next) => {
     try{
-        const chessEloService = new ChessEloService(MongoDB.client);
-       
-        const document = await chessEloService.findChessEloById(req.params.id);
+        const ChessReporterService = new ChessReporterService(MongoDB.client);
+        const document = await ChessReporterService.findChessReporterById(req.params.id);
         if(!document){
             return next(new ApiError(404,"Player not found"));
         }
@@ -52,14 +50,14 @@ exports.findOneChessElo = async (req,res, next) => {
         );
     }
 };
-exports.updateChessElo = async (req,res,next) => {
+exports.updateChessReporter = async (req,res,next) => {
     if(Object.keys(req.body).length === 0){
         return next(new ApiError(400,"Data to update can not be empty"));
     }
 
     try{
-        const ChessEloService = new PlayerService(MongoDB.client);
-        const document = await ChessEloService.updatePlayer(req.params.id,req.body);
+        const ChessReporterService = new ChessReporterService(MongoDB.client);
+        const document = await ChessReporterService.updateReporter(req.params.id,req.body);
         if(!document){
             return next(new ApiError(404,"Player not found"));
         }
@@ -70,3 +68,4 @@ exports.updateChessElo = async (req,res,next) => {
         );
     }
 };
+

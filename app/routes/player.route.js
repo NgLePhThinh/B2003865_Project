@@ -9,9 +9,13 @@ router.route("/")
     .post(players.createPlayer)
     .delete(players.deleteAllPlayer);
 
-router.route(":/id")
+router.route("/blackwhite")
+    .get(players.getBlackWhite);
+router.route("/:id")
     .get(players.findOnePlayer)
     .put(players.updatePlayer)
     .delete(players.deletePlayer)
 
- module.exports = router;
+
+
+module.exports = router;

@@ -9,7 +9,7 @@ router.route("/")
     .post(user.createUser)
     .delete(user.deleteAllUser);
 
-router.route(":/id")
+router.route("/:id")
     .get(user.findOneUser)
     .put(user.updateUser)
     .delete(user.deleteUser)

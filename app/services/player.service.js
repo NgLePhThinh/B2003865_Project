@@ -9,6 +9,7 @@ class PlayerService{
             firstName: payload.firstName,
             lastName: payload.lastName,
             federation: payload.federation,
+            fedImg: payload.fedImg,
             Sex: payload.Sex,
             FIDETitle: payload.FIDETitle,
             WorldRank: payload.WorldRank,
@@ -17,6 +18,7 @@ class PlayerService{
             blitz: payload.blitz,
             avatar: payload.avatar,
             B_Year: payload.B_Year,
+
         }
         Object.keys(player).forEach(
             (key)=> player[key] === undefined && delete player[key]
@@ -70,6 +72,11 @@ class PlayerService{
     async deleteAllPlayer() {
         const result = await this.Player.deleteMany({});
         return result.deletedCount;
+    }
+    async getBlackWhite(playerid){
+        return await this.Player.findOne({
+            _id: playerid
+        })
     }
 }
 

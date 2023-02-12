@@ -15,7 +15,7 @@ app.use(express.json());
 const playersRouter = require("./app/routes/player.route");
 const chesseloRouter = require("./app/routes/chesselo.route");
 const userRouter = require("./app/routes/user.route");
-
+const chessReporter = require("./app/routes/chessreporter.route")
 const ApiArror = require("./app/api-error")
 
 
@@ -27,6 +27,7 @@ app.get("/",(req, res) =>{
 app.use("/api/players",playersRouter);
 app.use("/api/chesselo",chesseloRouter);
 app.use("/api/users",userRouter);
+app.use("/api/reporter",chessReporter);
 
 // //handle 404 response
 app.use((req, res, next) =>{

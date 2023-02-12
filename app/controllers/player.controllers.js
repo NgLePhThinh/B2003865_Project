@@ -26,9 +26,8 @@ exports.findAllPlayer = async (req,res, next) => {
     try{
         const playerService = new PlayerService(MongoDB.client);
         const {name} = req.query;
-        console.log(name)
         if(name){
-            documents = await playerService.findPlayerByName(name);
+            documents = await playerService.findPlayerByName({name});
         }else{
             documents = await playerService.findPlayer({});
         }
@@ -43,6 +42,7 @@ exports.findAllPlayer = async (req,res, next) => {
 
 //#region Find a single Player with an id
 exports.findOnePlayer = async (req,res, next) => {
+    console.log(req.params.id);
     try{
         const playerService = new PlayerService(MongoDB.client);
         const document = await playerService.findPlayerById(req.params.id);
@@ -66,7 +66,6 @@ exports.updatePlayer = async (req,res,next) => {
     if(Object.keys(req.body).length === 0){
         return next(new ApiError(400,"Data to update can not be empty"));
     }
-
     try{
         const playerService = new PlayerService(MongoDB.client);
         const document = await playerService.updatePlayer(req.params.id,req.body);
@@ -116,3 +115,18 @@ exports.deleteAllPlayer = async (_req,res,next) => {
     }
 };
 //#endregion
+exports.getBlackWhite = async (req, res, next) => {
+    try{
+        const playerService = new PlayerService(MongoDB.client);
+        const black = await playerService.findPlayerById(req.query.BlackID);
+        const white = await playerService.findPlayerById(req.query.WhiteID);
+        console.log(white);
+        res.json({
+            white: white,
+            black: black
+        })
+    }catch(err){
+
+    }
+    return true
+};
